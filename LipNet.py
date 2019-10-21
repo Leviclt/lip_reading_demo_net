@@ -29,7 +29,7 @@ class LipSeqLoss(nn.Module):
         return loss
 
 class LipNet(torch.nn.Module):
-    def __init__(self, init_features_num=64, drop_rate=0.5, type_class=313):
+    def __init__(self, init_features_num=64, drop_rate=0.3, type_class=313):
         super(LipNet, self).__init__()
         self.drop_rate = drop_rate
         self.type_class = type_class 
