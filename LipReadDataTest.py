@@ -45,4 +45,4 @@ class ReadData(Dataset):
                 transforms.Normalize([0, 0, 0], [1, 1, 1]) 
             ])(frames_[i])
             vlm[:, i] = result       
-        return {'volume': vlm, 'length': length, 'key': key}
+        return {'volume': vlm, 'length': length, 'key': path}
