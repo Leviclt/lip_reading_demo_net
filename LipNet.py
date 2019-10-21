@@ -36,12 +36,11 @@ class LipNet(torch.nn.Module):
 
         # Cnn
         self.features = nn.Sequential(OrderedDict([
-            ('conv0', nn.Conv3d(3, init_features_num, kernel_size=(5, 7, 7), stride=(1, 2, 2), padding=(2, 3, 3), bias=False)),
-            ('norm0', nn.BatchNorm3d(init_features_num)),
-            ('relu0', nn.ReLU(inplace=True)),
-            ('pool0', nn.MaxPool3d(kernel_size=(1, 3, 3), stride=(1, 2, 2), padding=(0, 1, 1))), ]))
-      
-
+            ('conv', nn.Conv3d(3, init_features_num, kernel_size=(5, 7, 7), stride=(1, 2, 2), padding=(2, 3, 3), bias=False)),
+            ('norm', nn.BatchNorm3d(init_features_num)),
+            ('relu', nn.ReLU(inplace=True)),
+            ('pool', nn.MaxPool3d(kernel_size=(1, 3, 3), stride=(1, 2, 2), padding=(0, 1, 1))), ]))
+     
         # Rnn
         self.gru1 = nn.GRU(64*28*28, 256, bidirectional=True, batch_first=True) 
         self.gru2 = nn.GRU(512, 256, bidirectional=True, batch_first=True)
@@ -57,8 +56,8 @@ class LipNet(torch.nn.Module):
         # Cnn
         cnn = self.features(x)
         cnn = cnn.permute(0, 2, 1, 3, 4).contiguous()
-        B, S, C, H, W = cnn.size()
-        cnn = cnn.view(B, S, -1)
+        batch, seq, channel, high, width = cnn.size()
+        cnn = cnn.view(batch, seq, -1)
         # Rnn
         rnn, _ = self.gru1(cnn)
         rnn, _ = self.gru2(rnn)
