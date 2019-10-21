@@ -25,11 +25,12 @@ class ReadData(Dataset):
     def __len__(self):
         return len(self.data)
 
-    def __getitem__(self, idx):        
+    def __getitem__(self, idx):  
         (path, pic_nums) = self.data[idx]
         path = os.path.join(self.data_root, path)
         files = [os.path.join(path, ('{}' + '.png').format(i)) for i in range(1, pic_nums+1)]
         files = filter(lambda path: os.path.exists(path), files)
+        key = files.split('/')[-1] 
         frames = [cv2.imread(file) for file in files ] 
         frames_ = [cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  for img in frames]       
         length = len(frames_)    
@@ -45,4 +46,4 @@ class ReadData(Dataset):
                 transforms.Normalize([0, 0, 0], [1, 1, 1]) 
             ])(frames_[i])
             vlm[:, i] = result       
-        return {'volume': vlm, 'length': length, 'key': path}
+        return {'volume': vlm, 'length': length, 'key': key}
