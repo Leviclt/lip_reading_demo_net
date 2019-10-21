@@ -20,7 +20,7 @@ class ReadData(Dataset):
             self.lengths = [len(os.listdir(path)) for path in pic_path]
             
             save_dict = pd.DataFrame(self.dictionary, columns=['dict'])
-            save_dict.to_csv('./dictionary/dictionary.csv', encoding='utf8',index=None)  #save dict
+            save_dict.to_csv('./dictionary/dictionary.csv', encoding='utf8', index=None)  #save dict
 
             self.data = [(line[0], self.dictionary.index(line[1]), length) for line, length in zip(lines, self.lengths)]
             self.data = list(filter(lambda sample: sample[-1] <= self.seq_max_lens, self.data))      
