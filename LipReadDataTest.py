@@ -12,7 +12,6 @@ class ReadData(Dataset):
         self.data_root = image_root
         self.data = []
 
-
         # linux: /   windows:\\
         pic_file_path = [root for root, dirs, files in os.walk(self.data_root) if root.split('/')[-1]!=self.data_root.split('/')[-1]]
         file_names = [i.split('/')[-1] for i in pic_file_path]
@@ -21,7 +20,6 @@ class ReadData(Dataset):
         self.data = [(file_name, length,) for file_name, length in zip(file_names, self.lengths)]        
         self.data = list(filter(lambda sample: sample[-1] <= self.seq_max_lens, self.data)) 
    
-
     def __len__(self):
         return len(self.data)
 
