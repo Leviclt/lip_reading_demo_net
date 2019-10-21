@@ -30,6 +30,7 @@ class ReadData(Dataset):
         path = os.path.join(self.data_root, path)
         files = [os.path.join(path, ('{}' + '.png').format(i)) for i in range(1, pic_nums+1)]
         files = filter(lambda path: os.path.exists(path), files)
+         # linux: /   windows:\\
         key = files.split('/')[-1] 
         frames = [cv2.imread(file) for file in files ] 
         frames_ = [cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  for img in frames]       
